@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limpeza de cache — Editor</title>
+<style>
+  body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;display:flex;
+       align-items:center;justify-content:center;min-height:100vh;margin:0;text-align:center}
+  .box{padding:2rem}
+  h1{font-size:1.1rem} p{color:#94a3b8;font-size:.9rem}
+  .ok{color:#34d399;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>🧹 Limpando cache do editor…</h1>
+  <p id="log">executando…</p>
+</div>
+<script>
+(async () => {
+  const log = m => document.getElementById('log').textContent = m;
+  try {
+    // 1. service workers fora
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for (const r of regs) await r.unregister();
+    }
+    // 2. todos os caches do origin
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+    }
+    // 3. localStorage + sessionStorage limpos
+    try { localStorage.clear(); } catch(e) {}
+    try { sessionStorage.clear(); } catch(e) {}
+    // 4. indexedDB inteiro
+    if (indexedDB.databases) {
+      const dbs = await indexedDB.databases();
+      for (const db of dbs) indexedDB.deleteDatabase(db.name);
+    }
+    log('<span class="ok">✓ limpo!</span> abrindo o editor novo…');
+    // 5. volta ao editor SEM cache
+    setTimeout(() => location.replace('index.html?v=' + Date.now()), 900);
+  } catch (e) {
+    log('erro: ' + e.message + ' — recarregando mesmo assim…');
+    setTimeout(() => location.replace('index.html?v=' + Date.now()), 1500);
+  }
+})();
+</script>
+</body>
+</html>
