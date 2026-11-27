@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="548" height="438" viewBox="0 0 548 438">
+  <title>Símbolo geométrico — Hospital São Lucas</title>
+  <desc>Reconstrução vetorial a partir da referência fotográfica, sem tipografia, com fundo transparente.</desc>
+  <defs>
+    <linearGradient id="grayTop" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#252525"/><stop offset="0.48" stop-color="#777777"/><stop offset="1" stop-color="#454545"/>
+    </linearGradient>
+    <linearGradient id="grayFaint" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#b0b0b0" stop-opacity="0.38"/><stop offset="0.76" stop-color="#b0b0b0" stop-opacity="0.25"/><stop offset="1" stop-color="#535353" stop-opacity="0.86"/>
+    </linearGradient>
+  </defs>
+  <g stroke-width="9" stroke-linejoin="miter">
+    <rect x="6" y="6" width="96" height="96" fill="none" stroke="#0A0A0A"/>
+    <rect x="116" y="6" width="96" height="96" fill="none" stroke="#0A0A0A"/>
+    <rect x="226" y="6" width="96" height="96" fill="#F58215" stroke="#0A0A0A"/>
+    <rect x="336" y="6" width="96" height="96" fill="none" stroke="url(#grayTop)"/>
+    <rect x="6" y="116" width="96" height="96" fill="none" stroke="#0A0A0A"/>
+    <rect x="116" y="116" width="96" height="96" fill="none" stroke="#0A0A0A"/>
+    <rect x="226" y="116" width="96" height="96" fill="#F58215" stroke="#0A0A0A"/>
+    <rect x="6" y="226" width="96" height="96" fill="none" stroke="#0A0A0A"/>
+    <rect x="116" y="226" width="96" height="96" fill="none" stroke="#0A0A0A"/>
+    <rect x="226" y="226" width="96" height="96" fill="#F58215" stroke="#0A0A0A"/>
+    <rect x="336" y="226" width="96" height="96" fill="none" stroke="url(#grayFaint)"/>
+    <rect x="6" y="336" width="96" height="96" fill="#E92318" stroke="#0A0A0A"/>
+    <rect x="116" y="336" width="96" height="96" fill="#F58215" stroke="#0A0A0A"/>
+    <rect x="226" y="336" width="96" height="96" fill="#F58215" stroke="#0A0A0A"/>
+    <rect x="336" y="336" width="96" height="96" fill="none" stroke="#0A0A0A"/>
+    <rect x="446" y="336" width="96" height="96" fill="none" stroke="url(#grayFaint)"/>
+  </g>
+</svg>
