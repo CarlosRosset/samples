@@ -34,13 +34,14 @@ document.getElementById('bugReset').addEventListener('click', async () => {
   if (!confirm('Limpar cache, storage e service workers deste site e recarregar?')) return;
   st.textContent = 'Limpando cache…';
   try {
+    console.log('[bugReset] início — SW + caches + storage + IndexedDB');
     if ('serviceWorker' in navigator) {
       const regs = await navigator.serviceWorker.getRegistrations();
-      for (const r of regs) await r.unregister();
+      for (const r of regs) { await r.unregister(); console.log('[bugReset] SW desregistrado:', r.scope); }
     }
     if ('caches' in window) {
       const keys = await caches.keys();
-      await Promise.all(keys.map(k => caches.delete(k)));
+      await Promise.all(keys.map(k => { console.log('[bugReset] cache apagado:', k); return caches.delete(k); }));
     }
     try { localStorage.clear(); } catch(e) {}
     try { sessionStorage.clear(); } catch(e) {}
@@ -48,6 +49,7 @@ document.getElementById('bugReset').addEventListener('click', async () => {
       const dbs = await indexedDB.databases();
       for (const db of dbs) indexedDB.deleteDatabase(db.name);
     }
+    console.log('[bugReset] tudo limpo — recarregando sem cache');
     location.replace(location.pathname + '?v=' + Date.now());
   } catch (e) {
     st.textContent = 'Erro ao limpar: ' + e.message + ' — recarregando mesmo assim…';
