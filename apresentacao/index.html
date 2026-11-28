@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1630">
+<title>Apresentação · POC 01</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1630;--panel:#173b63;--accent:#65e4cd;--muted:#a8b9d0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#f4f8ff}
+#app{display:grid;grid-template-columns:minmax(0,1fr);height:100vh;height:100dvh;width:100%;overflow:hidden}
+#presentation{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) calc(12px + env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) calc(12px + env(safe-area-inset-left,0px));overflow:auto;background:radial-gradient(ellipse at 50% 75%,#183655,var(--bg) 72%)}
+#diagnostic{position:relative;z-index:1;align-self:flex-start;max-width:100%;width:280px;padding:12px 14px;background:#11233e;border:1px solid #334d6c;border-radius:12px;font-size:12px;line-height:1.4;box-shadow:0 4px 15px #0002}
+.eyebrow{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+#orientation{display:block;margin:4px 0 7px;color:var(--accent);font-size:19px;line-height:1.1}
+dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:baseline}
+dt{color:var(--muted)}dd{margin:0;font-weight:650;font-variant-numeric:tabular-nums;text-align:right}
+.note{margin:7px 0 0;color:var(--muted);font-size:10px}
+#stage{flex:1;min-height:0;display:grid;place-content:center;text-align:center;padding:12px}
+#stage h1{font-size:clamp(16px,3vw,30px);letter-spacing:.02em;margin:0 0 6px}
+#stage p{margin:0;color:var(--muted);font-size:12px}
+#avatar-panel{display:none;min-width:0;min-height:0;overflow:auto;background:var(--panel);border-left:1px solid #ffffff25;padding:calc(10px + env(safe-area-inset-top,0px)) calc(8px + env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) 8px;text-align:center;align-content:center}
+.avatar-symbol{width:clamp(32px,12vmin,76px);height:auto;display:block;margin:0 auto 8px;color:#9ccfff}
+#avatar-panel h2{font-size:clamp(12px,2.5vw,18px);margin:0 0 5px;overflow-wrap:anywhere}
+#avatar-panel p{font-size:11px;color:#c0dbf5;margin:0;overflow-wrap:anywhere}
+#fab{position:fixed;z-index:3;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border:0;border-radius:50%;background:#2877cb;color:white;display:grid;place-items:center;cursor:pointer}
+#fab svg{width:28px;height:28px}
+#fab:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+#avatar-popover{position:fixed;z-index:2;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(84px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--panel);padding:14px;border-radius:12px;font-size:13px;box-shadow:0 4px 20px #0004}
+[hidden]{display:none!important}
+@media (orientation:landscape){
+ #app{grid-template-columns:minmax(0,3fr) minmax(0,1fr)}
+ #presentation{padding-right:12px}
+ #avatar-panel{display:grid}
+ #fab,#avatar-popover{display:none!important}
+}
+@media (max-height:280px){#stage{place-content:start center;min-height:50px}}
+</style>
+</head>
+<body>
+<div id="app">
+ <main id="presentation">
+  <section id="diagnostic" aria-label="Diagnóstico de tela">
+   <span class="eyebrow">Diagnóstico em tempo real · V01</span>
+   <strong id="orientation">—</strong>
+   <dl>
+    <dt>Viewport X (largura)</dt><dd id="vx">—</dd>
+    <dt>Viewport Y (altura)</dt><dd id="vy">—</dd>
+    <dt>Área visível X × Y</dt><dd id="visual">—</dd>
+    <dt>Apresentação X × Y</dt><dd id="content-size">—</dd>
+    <dt>Avatar X × Y</dt><dd id="avatar-size">—</dd>
+    <dt>Divisão horizontal</dt><dd id="split">—</dd>
+   </dl>
+   <p class="note">Medidas em pixels CSS · atualização automática.</p>
+  </section>
+  <div id="stage"><div><h1>Área de apresentação</h1><p id="stage-info">—</p></div></div>
+ </main>
+ <aside id="avatar-panel" aria-label="Painel do avatar">
+  <div>
+   <svg class="avatar-symbol" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="24" cy="15" r="8"/><path d="M8 43v-5a16 16 0 0 1 32 0v5" stroke-linecap="round"/></svg>
+   <h2>Avatar</h2><p>25% da largura</p><p id="panel-info">—</p>
+  </div>
+ </aside>
+</div>
+<button id="fab" type="button" aria-label="Abrir opções do avatar" aria-expanded="false" aria-controls="avatar-popover"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3"><circle cx="24" cy="15" r="8"/><path d="M8 43v-5a16 16 0 0 1 32 0v5" stroke-linecap="round"/></svg></button>
+<div id="avatar-popover" hidden>Avatar · opções futuras</div>
+<script>
+(() => {
+ 'use strict';
+ const $=id=>document.getElementById(id);
+ const app=$('app'), presentation=$('presentation'), panel=$('avatar-panel'), fab=$('fab'), pop=$('avatar-popover');
+ const landscape=window.matchMedia('(orientation: landscape)');
+ const fmt=n=>String(Math.round(n*100)/100);
+ const size=(w,h)=>fmt(w)+' × '+fmt(h)+' px';
+ let frame=0;
+ function closeAvatar(){pop.hidden=true;fab.setAttribute('aria-expanded','false');fab.setAttribute('aria-label','Abrir opções do avatar')}
+ function update(){
+  frame=0;
+  const a=app.getBoundingClientRect(), p=presentation.getBoundingClientRect(), q=panel.getBoundingClientRect(), v=window.visualViewport;
+  const horizontal=landscape.matches;
+  $('orientation').textContent=horizontal?'PAISAGEM · Landscape':'RETRATO · Portrait';
+  $('vx').textContent=fmt(a.width)+' px';
+  $('vy').textContent=fmt(a.height)+' px';
+  $('visual').textContent=size(v?v.width:a.width,v?v.height:a.height);
+  $('content-size').textContent=size(p.width,p.height);
+  $('avatar-size').textContent=horizontal?size(q.width,q.height):'Botão 56 × 56 px';
+  $('split').textContent=horizontal?'75% / 25%':'100% / FAB';
+  $('stage-info').textContent=(horizontal?'75%':'100%')+' · '+size(p.width,p.height);
+  $('panel-info').textContent=horizontal?size(q.width,q.height):'';
+  if(horizontal)closeAvatar();
+ }
+ function schedule(){if(!frame)frame=requestAnimationFrame(update)}
+ window.addEventListener('resize',schedule,{passive:true});
+ window.addEventListener('orientationchange',schedule,{passive:true});
+ if(landscape.addEventListener)landscape.addEventListener('change',schedule);else if(landscape.addListener)landscape.addListener(schedule);
+ if(window.visualViewport)window.visualViewport.addEventListener('resize',schedule,{passive:true});
+ if('ResizeObserver' in window){const observer=new ResizeObserver(schedule);observer.observe(app);observer.observe(presentation);observer.observe(panel)}
+ fab.addEventListener('click',()=>{const open=pop.hidden;pop.hidden=!open;fab.setAttribute('aria-expanded',String(open));fab.setAttribute('aria-label',open?'Fechar opções do avatar':'Abrir opções do avatar')});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAvatar()});
+ update();
+})();
+</script>
+</body>
+</html>
